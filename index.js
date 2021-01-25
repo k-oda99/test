@@ -2,7 +2,6 @@
 // モジュールのインポート
 const server = require("express")();
 const line = require("@line/bot-sdk"); // Messaging APIのSDKをインポート
-import schedule from 'node-schedule';
 
 // -----------------------------------------------------------------------------
 // パラメータ設定

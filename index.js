@@ -51,8 +51,8 @@ server.post('/bot/webhook', line.middleware(line_config), (req, res, next) => {
 });
 
 const job = schedule.scheduleJob({
-    hour: 21,
-    minute: 55
+    hour: 22,
+    minute: 03
   }, function () {
     var CHANNEL_ACCESS_TOKEN = 'AIK5oi6wDOmcuAhFyIJRYeewDfN8pttKrxTKv6EECY/ypTeh2D0ktRVmOCFsb6yhT+cbAWCaZEhKb499LRfi5lkQ+7gbXS1y/NKPw4EztxjPR+mlylgqpdi3rofH8DHIku/dlbdXorc6TrJZzq0/ewdB04t89/1O/w1cDnyilFU='; 
     var USER_ID = 'Ue0ca3d3774092cd3ca5bbfed18e367b0';
@@ -80,4 +80,6 @@ const job = schedule.scheduleJob({
     };
     var response = UrlFetchApp.fetch(url, options);
     }
+
+    pushMessage();
   })

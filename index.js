@@ -32,11 +32,11 @@ server.post('/bot/webhook', line.middleware(line_config), (req, res, next) => {
         // この処理の対象をイベントタイプがメッセージで、かつ、テキストタイプだった場合に限定。
         if (event.type == "message" && event.message.type == "text"){
             // ユーザーからのテキストメッセージが「こんにちは」だった場合のみ反応。
-            if (event.message.text == "こんにちは"){
+            if (event.message.text == "カレンダー"){
                 // replyMessage()で返信し、そのプロミスをevents_processedに追加。
                 events_processed.push(bot.replyMessage(event.replyToken, {
                     type: "text",
-                    text: "これはこれは"
+                    text: "次の通院予定日は○月×日です！"
                 }));
             }
         }
@@ -49,3 +49,35 @@ server.post('/bot/webhook', line.middleware(line_config), (req, res, next) => {
         }
     );
 });
+
+const job = schedule.scheduleJob({
+    hour: 21,
+    minute: 55
+  }, function () {
+    var CHANNEL_ACCESS_TOKEN = 'AIK5oi6wDOmcuAhFyIJRYeewDfN8pttKrxTKv6EECY/ypTeh2D0ktRVmOCFsb6yhT+cbAWCaZEhKb499LRfi5lkQ+7gbXS1y/NKPw4EztxjPR+mlylgqpdi3rofH8DHIku/dlbdXorc6TrJZzq0/ewdB04t89/1O/w1cDnyilFU='; 
+    var USER_ID = 'Ue0ca3d3774092cd3ca5bbfed18e367b0';
+
+    function pushMessage() {
+        //deleteTrigger();
+    var postData = {
+        "to": USER_ID,
+        "messages": [{
+        "type": "text",
+        "text": "おはよう",
+        }]
+    };
+
+    var url = "https://api.line.me/v2/bot/message/push";
+    var headers = {
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer ' + CHANNEL_ACCESS_TOKEN,
+    };
+
+    var options = {
+        "method": "post",
+        "headers": headers,
+        "payload": JSON.stringify(postData)
+    };
+    var response = UrlFetchApp.fetch(url, options);
+    }
+  })

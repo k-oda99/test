@@ -51,17 +51,17 @@ server.post('/bot/webhook', line.middleware(line_config), (req, res, next) => {
     );
 });
 
-schedule.scheduleJob( '* * * * *', function(){
-    const message = {
-        type: 'text',
-        text: 'Hello World!'
-    };
+// schedule.scheduleJob( '* * * * *', function(){
+//     const message = {
+//         type: 'text',
+//         text: 'Hello World!'
+//     };
     
-    bot.pushMessage('Ue0ca3d3774092cd3ca5bbfed18e367b0', message)
-        .then(() => {
+//     bot.pushMessage('Ue0ca3d3774092cd3ca5bbfed18e367b0', message)
+//         .then(() => {
         
-        })
-        .catch((err) => {
-        // error handling
-        });
-});
+//         })
+//         .catch((err) => {
+//         // error handling
+//         });
+// });

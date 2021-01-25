@@ -56,7 +56,7 @@ const message = {
     text: 'Hello World!'
   };
   
-  client.pushMessage('Ue0ca3d3774092cd3ca5bbfed18e367b0', message)
+  bot.pushMessage('Ue0ca3d3774092cd3ca5bbfed18e367b0', message)
     .then(() => {
       
     })

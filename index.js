@@ -2,7 +2,7 @@
 // モジュールのインポート
 const server = require("express")();
 const line = require("@line/bot-sdk"); // Messaging APIのSDKをインポート
-// import schedule from 'node-schedule';
+var schedule = require( 'node-schedule' );
 
 // -----------------------------------------------------------------------------
 // パラメータ設定
@@ -51,15 +51,17 @@ server.post('/bot/webhook', line.middleware(line_config), (req, res, next) => {
     );
 });
 
-const message = {
-    type: 'text',
-    text: 'Hello World!'
-  };
-  
-  bot.pushMessage('Ue0ca3d3774092cd3ca5bbfed18e367b0', message)
-    .then(() => {
-      
-    })
-    .catch((err) => {
-      // error handling
-    });
+schedule.scheduleJob( '1 * * * *', function(){
+    const message = {
+        type: 'text',
+        text: 'Hello World!'
+    };
+    
+    bot.pushMessage('Ue0ca3d3774092cd3ca5bbfed18e367b0', message)
+        .then(() => {
+        
+        })
+        .catch((err) => {
+        // error handling
+        });
+});

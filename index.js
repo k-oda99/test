@@ -51,7 +51,7 @@ server.post('/bot/webhook', line.middleware(line_config), (req, res, next) => {
     );
 });
 
-schedule.scheduleJob( '1 * * * *', function(){
+schedule.scheduleJob( '* * * * *', function(){
     const message = {
         type: 'text',
         text: 'Hello World!'

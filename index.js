@@ -33,13 +33,22 @@ server.post('/bot/webhook', line.middleware(line_config), (req, res, next) => {
         // この処理の対象をイベントタイプがメッセージで、かつ、テキストタイプだった場合に限定。
         if (event.type == "message" && event.message.type == "text"){
             // ユーザーからのテキストメッセージが「こんにちは」だった場合のみ反応。
-            if (event.message.text == "次の通院日"){
-                // replyMessage()で返信し、そのプロミスをevents_processedに追加。
+            switch(event.message.text) {
+                case "次の通院日":
+                    events_processed.push(bot.replyMessage(event.replyToken, {
+                        type: "text",
+                        text: "次の通院予定日は○月×日です！"
+                    }));
+                case "yes":
+                    events_processed.push(bot.replyMessage(event.replyToken, {
+                        type: "text",
+                        text: "今日も1日お疲れ様でした！😆おやすみなさい😴"
+                    }));
+                case "no":
                 events_processed.push(bot.replyMessage(event.replyToken, {
                     type: "text",
-                    text: "次の通院予定日は○月×日です！"
+                    text: "15分後にリマインドしますね！☺"
                 }));
-            }
         }
     });
 
@@ -55,28 +64,43 @@ server.get('/bot/webhook', (req, res) => {
     // 先行してLINE側にステータスコード200でレスポンスする。
     res.sendStatus(200);
 
-    // すべてのイベント処理のプロミスを格納する配列。
-    let events_processed = [];
-
     const message = {
         type: 'text',
-        text: '服薬の準備はできていますか？'
+        text: '服薬の準備はできていますか？',
+        quickReply: {
+            items: [
+              {
+                type: "action",
+                imageUrl: "https://example.com/sushi.png",
+                action: {
+                  type: "message",
+                  label: "はい",
+                  text: "yes"
+                }
+              },
+              {
+                type: "action",
+                imageUrl: "https://example.com/tempura.png",
+                action: {
+                  type: "message",
+                  label: "いいえ",
+                  text: "no"
+                }
+              }
+            ]
+          }
     };
-            
-    bot.pushMessage('Ue0ca3d3774092cd3ca5bbfed18e367b0', message)
+
+    function send () {
+        bot.pushMessage('Ue0ca3d3774092cd3ca5bbfed18e367b0', message)
         .then(() => {
         
         })
         .catch((err) => {
         // error handling
         });
-
-    // すべてのイベント処理が終了したら何個のイベントが処理されたか出力。
-    Promise.all(events_processed).then(
-        (response) => {
-            console.log(`${response.length} event(s) processed.`);
-        }
-    );
+    }
+    setTimeout(send, 10000)
 });
 
 // schedule.scheduleJob( '* * * * *', function(){

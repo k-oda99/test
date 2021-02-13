@@ -33,7 +33,7 @@ server.post('/bot/webhook', line.middleware(line_config), (req, res, next) => {
         // この処理の対象をイベントタイプがメッセージで、かつ、テキストタイプだった場合に限定。
         if (event.type == "message" && event.message.type == "text"){
             // ユーザーからのテキストメッセージが「こんにちは」だった場合のみ反応。
-            if (event.message.text == "カレンダー"){
+            if (event.message.text == "次の通院日"){
                 // replyMessage()で返信し、そのプロミスをevents_processedに追加。
                 events_processed.push(bot.replyMessage(event.replyToken, {
                     type: "text",
@@ -42,6 +42,34 @@ server.post('/bot/webhook', line.middleware(line_config), (req, res, next) => {
             }
         }
     });
+
+    // すべてのイベント処理が終了したら何個のイベントが処理されたか出力。
+    Promise.all(events_processed).then(
+        (response) => {
+            console.log(`${response.length} event(s) processed.`);
+        }
+    );
+});
+
+server.get('/bot/webhook', (req, res) => {
+    // 先行してLINE側にステータスコード200でレスポンスする。
+    res.sendStatus(200);
+
+    // すべてのイベント処理のプロミスを格納する配列。
+    let events_processed = [];
+
+    const message = {
+        type: 'text',
+        text: '服薬の準備はできていますか？'
+    };
+            
+    bot.pushMessage('Ue0ca3d3774092cd3ca5bbfed18e367b0', message)
+        .then(() => {
+        
+        })
+        .catch((err) => {
+        // error handling
+        });
 
     // すべてのイベント処理が終了したら何個のイベントが処理されたか出力。
     Promise.all(events_processed).then(

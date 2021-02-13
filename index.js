@@ -39,12 +39,12 @@ server.post('/bot/webhook', line.middleware(line_config), (req, res, next) => {
                         type: "text",
                         text: "次の通院予定日は○月×日です！"
                     }));
-                case "yes":
+                case "はい":
                     events_processed.push(bot.replyMessage(event.replyToken, {
                         type: "text",
-                        text: "今日も1日お疲れ様でした！😆おやすみなさい😴"
+                        text: "今日も1日お疲れ様でした！😆\nおやすみなさい😴"
                     }));
-                case "no":
+                case "いいえ":
                 events_processed.push(bot.replyMessage(event.replyToken, {
                     type: "text",
                     text: "15分後にリマインドしますね！☺"
@@ -76,7 +76,7 @@ server.get('/bot/webhook', (req, res) => {
                 action: {
                   type: "message",
                   label: "はい",
-                  text: "yes"
+                  text: "はい"
                 }
               },
               {
@@ -85,7 +85,7 @@ server.get('/bot/webhook', (req, res) => {
                 action: {
                   type: "message",
                   label: "いいえ",
-                  text: "no"
+                  text: "いいえ"
                 }
               }
             ]

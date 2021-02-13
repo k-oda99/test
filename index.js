@@ -45,10 +45,10 @@ server.post('/bot/webhook', line.middleware(line_config), (req, res, next) => {
                         text: "今日も1日お疲れ様でした！😆\nおやすみなさい😴"
                     }));
                 case "いいえ":
-                events_processed.push(bot.replyMessage(event.replyToken, {
-                    type: "text",
-                    text: "15分後にリマインドしますね！☺"
-                }));
+                    events_processed.push(bot.replyMessage(event.replyToken, {
+                        type: "text",
+                        text: "15分後にリマインドしますね！☺"
+                    }));
             }
         }
     });

@@ -101,7 +101,7 @@ server.get('/bot/webhook', (req, res) => {
         // error handling
         });
     }
-    setTimeout(send, 10000)
+    setTimeout(send, 5000)
 });
 
 // schedule.scheduleJob( '* * * * *', function(){

@@ -32,18 +32,6 @@ server.post('/bot/webhook', line.middleware(line_config), (req, res, next) => {
     req.body.events.forEach((event) => {
         // この処理の対象をイベントタイプがメッセージで、かつ、テキストタイプだった場合に限定。
         
-        async function getProf() {
-            await bot.getProfile(event.source.userId).then(result => {
-                console.log(result).catch(console.log)
-            });
-        }
-
-        console.log('プロファイル：')
-        getProf()
-
-        console.log('id：')
-        console.log(event.source.userId)
-        
         if (event.type == "message" && event.message.type == "text"){
             // ユーザーからのテキストメッセージが「こんにちは」だった場合のみ反応。
             switch(event.message.text) {
@@ -105,8 +93,8 @@ server.get('/bot/webhook', (req, res) => {
         }
     };
 
-    function send () {
-        bot.pushMessage('Ue0ca3d3774092cd3ca5bbfed18e367b0', message)
+    function send (id) {
+        bot.pushMessage(id, message)
         .then(() => {
         
         })
@@ -114,7 +102,8 @@ server.get('/bot/webhook', (req, res) => {
         // error handling
         });
     }
-    setTimeout(send, 5000)
+    setTimeout(send('Ue0ca3d3774092cd3ca5bbfed18e367b0'), 5000)
+    setTimeout(send('U727de281a9214cf88e1fa58a0f5e988e'), 5000)
 });
 
 // schedule.scheduleJob( '* * * * *', function(){

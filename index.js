@@ -65,6 +65,7 @@ server.get('/bot/webhook', (req, res) => {
     // 先行してLINE側にステータスコード200でレスポンスする。
     res.sendStatus(200);
 
+    console.log('プロファイル：')
     console.log(bot.getProfile())
     
     const message = {

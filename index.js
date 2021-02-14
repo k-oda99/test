@@ -66,7 +66,7 @@ server.get('/bot/webhook', (req, res) => {
     res.sendStatus(200);
 
     console.log('プロファイル：')
-    bot.getProfile().then(result => {
+    await bot.getProfile().then(result => {
         console.log(result)
       });
     

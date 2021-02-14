@@ -67,7 +67,7 @@ server.get('/bot/webhook', (req, res) => {
 
     async function getProf() {
         await bot.getProfile().then(result => {
-            console.log(result)
+            console.log(result).catch(console.log)
         });
     }
 

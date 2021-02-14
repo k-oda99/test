@@ -40,6 +40,9 @@ server.post('/bot/webhook', line.middleware(line_config), (req, res, next) => {
 
         console.log('プロファイル：')
         getProf()
+
+        console.log('id：')
+        console.log(event.source.userId)
         
         if (event.type == "message" && event.message.type == "text"){
             // ユーザーからのテキストメッセージが「こんにちは」だった場合のみ反応。

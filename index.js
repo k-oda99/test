@@ -66,7 +66,9 @@ server.get('/bot/webhook', (req, res) => {
     res.sendStatus(200);
 
     console.log('プロファイル：')
-    console.log(bot.getProfile())
+    bot.getProfile().then(result => {
+        console.log(result)
+      });
     
     const message = {
         type: 'text',

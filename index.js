@@ -31,6 +31,16 @@ server.post('/bot/webhook', line.middleware(line_config), (req, res, next) => {
     // イベントオブジェクトを順次処理。
     req.body.events.forEach((event) => {
         // この処理の対象をイベントタイプがメッセージで、かつ、テキストタイプだった場合に限定。
+        
+        async function getProf() {
+            await bot.getProfile(event.source.userId).then(result => {
+                console.log(result).catch(console.log)
+            });
+        }
+
+        console.log('プロファイル：')
+        getProf()
+        
         if (event.type == "message" && event.message.type == "text"){
             // ユーザーからのテキストメッセージが「こんにちは」だった場合のみ反応。
             switch(event.message.text) {
@@ -65,15 +75,6 @@ server.get('/bot/webhook', (req, res) => {
     // 先行してLINE側にステータスコード200でレスポンスする。
     res.sendStatus(200);
 
-    async function getProf() {
-        await bot.getProfile().then(result => {
-            console.log(result).catch(console.log)
-        });
-    }
-
-    console.log('プロファイル：')
-    getProf()
-    
     const message = {
         type: 'text',
         text: '服薬の準備はできていますか？',
